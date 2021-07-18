@@ -5,18 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link  rel="stylesheet" href="../css/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src = "../javascript/index.js"></script>
     <title>Finance App</title>
 </head>
 <body>
     <div class = "navbar">
         <div class="options">
             <ul>
-                <li><img class = "logo" src = "../images/halfGlass.png" alt = "logo"></li>
+                <li><a href=#><img class = "logo" src = "../images/halfGlass.png" alt = "logo"></a></li>
                 <li id = "login">Login</li>
-                <li id = "about">About</li>
+                <li id = "FinanceApp" onclick= "setAppear()">Finance App
+                    <ul id = "dropDownHome" class = "dropDiss">
+                        <li>Indicadores</li>
+                        <li>Adicionar Gastos</li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
+    <div id = "bodyConteiner">
+        <div>
+            Cuide melhor de suas despezas
+        </div>  
+        <div id = "calculator"> 
+            <img class = "calcContent" src="../images/calculator.png" alt="calculatorImage">
+        </div>
+    </div>
+    
     
 </body>
 </html>
