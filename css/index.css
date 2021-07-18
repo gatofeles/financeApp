@@ -69,7 +69,8 @@ ul{
 
 .dropAppear>li{
     color: #000000;
-    background-color: rgba(255, 255, 255, 0.5);
+    margin: 0.5px;
+    background-color: rgba(255, 255, 255, 0.9);
     border-radius: 0.5rem;
     box-shadow: 5px 5px 10px #222222 ;
     padding: 1rem;
@@ -97,7 +98,6 @@ ul{
     background-color: rgba(233, 54, 54, 0.712);
     border-radius: 5rem;
     padding: 0.5rem;
-    box-shadow: 5px 5px 10px #222222 ;
     height: 50vh;
 }
 
