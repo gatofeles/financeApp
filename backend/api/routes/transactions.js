@@ -2,86 +2,61 @@ const express = require('express');
 const router = express.Router();
 const Transaction = require("../models/transaction");
 const mongoose = require("mongoose");
+const auth =  require('../middleware/auth');
 
-router.get('/', (req, res, next)=>{
-     Transaction.find().exec().then(trans => {
-        console.log(trans);
-        res.status(200).json({
-            transactions:trans
-        });
-    }).catch(err=>{res.status(500).json({
-        transactions:"Get failed. Reason: "+err.message});
-    });
-    
-});
-
-router.get('/:tranId', (req, res, next)=>{
-    Transaction.findById(req.params.tranId).exec().then(tran => {
-
-    if(tran){
-        res.status(200).json({
-            transactions:tran
-       });
+router.get('/', auth, async(req, res, next)=>{
+    const response = await Transaction.getAllTrans();
+    if(!response[0]){
+        res.status(400).send(response[1]);
     }
     else{
-        res.status(404).json({
-            transactions:"No transaction found with that Id."
-       });
+        res.status(200).send(response[1]);
     }   
-    }).catch(err=>{res.status(500).json({
-        transactions:"Get failed. Reason: "+err.message});
-    });
 });
 
-router.post('/', (req, res, next)=>{
-    const transaction = new Transaction({
-        _id: mongoose.Types.ObjectId(),
-        cost: req.body.cost,
-        title: req.body.title,
-        description: req.body.description,
-        date: mongoose.now().getUTCDate()
-    });
-
-    transaction.save().then(result =>{
-        console.log(result);
-        res.status(201).json({
-            message: "Transaction Successfully created",
-            response: transaction
-        }
-            );
-    }).catch(err=>{res.status(500).json({
-        transactions:"Post failed. Reason: "+err.message});
-    });
+router.get('/:userId', auth,  async(req, res, next)=>{
+    const response = await Transaction.getTransByUserId(req.params.userId);
+    if(!response[0]){
+        
+        res.status(400).send(response[1]);
+    }
+    else if(response[1].length <= 0){
+        res.status(404).send(response[1]);
+    }
+    else{
+        res.status(200).send(response[1]);
+    }
 });
 
-router.put('/:tranId',(req, res,next)=>{
-    Transaction.updateOne({_id: req.params.tranId},
-       {$set:{ cost: req.body.cost,
-        title: req.body.title,
-        description: req.body.description
-       }} ).exec().then(result => {
-        res.status(200).json({
-            message:"Transaction successfully updated.",
-            results:result
-        })
-    }).catch(err=>{
-        res.status(500).json({
-            message:"Update operation failed. Reason: "+err.message
-        })
-    });
+router.post('/',  auth, async(req, res, next)=>{
+    const response = await Transaction.createTran(req.body);
+    if(!response[0]){
+        res.status(400).send(response[1]);
+    }
+    else{
+        res.status(200).send(response[1]);
+    }
 });
 
-router.delete('/:tranId',(req, res,next)=>{
-    Transaction.remove({_id: req.params.tranId}).exec().then(result => {
-        res.status(200).json({
-            message:"Transaction successfully deleted.",
-            results:result
-        })
-    }).catch(err=>{
-        res.status(500).json({
-            message:"Delete operation failed. Reason: "+err.message
-        })
-    });
+router.put('/', auth, async(req, res,next)=>{
+    const response = await Transaction.updateTran(req.body);
+    if(!response[0]){
+        res.status(400).send(response[1]);
+    }
+    else{
+        res.status(200).send(response[1]);
+    }
 });
+
+router.delete('/',  auth, async(req, res,next)=>{
+    const response = await Transaction.deleteTran(req.body);
+    if(!response[0]){
+        res.status(400).send(response[1]);
+    }
+    else{
+        res.status(200).send(response[1]);
+    }
+});
+
 
 module.exports = router;
