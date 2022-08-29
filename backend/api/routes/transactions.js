@@ -14,6 +14,16 @@ router.get('/', auth, async(req, res, next)=>{
     }   
 });
 
+router.get('/:tranId', auth, async(req, res, next)=>{
+    const response = await Transaction.getTranById(req.params.tranId);
+    if(!response[0]){
+        res.status(400).send(response[1]);
+    }
+    else{
+        res.status(200).send(response[1]);
+    }   
+});
+
 router.get('/:userId', auth,  async(req, res, next)=>{
     const response = await Transaction.getTransByUserId(req.params.userId);
     if(!response[0]){

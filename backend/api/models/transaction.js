@@ -24,6 +24,7 @@ const tranValidSchema  = Joi.object({
 });
 
 const transactionSchema = mongoose.Schema({
+    id : mongoose.Types.ObjectId,
     userId: {
         type:String,
         required:true,
@@ -81,10 +82,12 @@ async function createTran(tran){
 
     let newTran = new Transaction(tran);
     newTran.date = new Date().toUTCString();
+    newTran._id = new mongoose.Types.ObjectId();
 
     //salvar na base de dados
-
+    
     tranResult = await newTran.save();
+    console.log(tranResult);
     return [true,tranResult];
 }
 
@@ -118,12 +121,12 @@ async function deleteTran(tran){
     let tranToDelete = await Transaction.findById(tran._id);
 
     if(!tranToDelete){
-        return [false, "Cartão não encontrado."];
+        return [false,  "Transaction not found."];
     }
 
     else{
         const result = await tranToDelete.deleteOne({_id:tran._id});
-        return [true, "Cartão removido com sucesso!"];
+        return [true, "Transaction successfully deleted."];
     }
 }
 
@@ -132,8 +135,24 @@ async function getTransByUserId(userId){
     return [true,trans];
 }
 
-async function getAllTrans(userId){
+async function getTransByUserId(userId){
+    const trans = await Transaction.find({userId:userId});
+    return [true,trans];
+}
+
+async function getTranById(tranId){
+    const tran = await Transaction.find({_id:tranId});
+    if(!tran){
+        return [false,  "Transaction not found."];
+    }
+    return [true,tran];
+}
+
+async function getAllTrans(tranId){
     const trans = await Transaction.find();
+    if(!trans){
+        return [false,  "Transactions not found."];
+    }
     return [true,trans];
 }
 
@@ -142,4 +161,5 @@ module.exports.createTran = createTran;
 module.exports.updateTran = updateTran;
 module.exports.deleteTran = deleteTran;
 module.exports.getAllTrans = getAllTrans;
+module.exports.getTranById = getTranById;
 module.exports.getTransByUserId = getTransByUserId;
