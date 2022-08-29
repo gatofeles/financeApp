@@ -35,7 +35,7 @@ namespace tests.Features
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Backend Endpoints", "The backend for getting information about transactions", ProgrammingLanguage.CSharp, featureTags);
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Features", "Backend Endpoints", "The backend for getting information about transactions: smoke tests", ProgrammingLanguage.CSharp, featureTags);
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -73,6 +73,15 @@ namespace tests.Features
             testRunner.CollectScenarioErrors();
         }
         
+        public virtual void FeatureBackground()
+        {
+#line 5
+#line hidden
+#line 6
+ testRunner.Given("I\'m logged in the backend rest api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+        }
+        
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("The one where I succesfully create a transaction")]
         public void TheOneWhereISuccesfullyCreateATransaction()
@@ -80,7 +89,7 @@ namespace tests.Features
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The one where I succesfully create a transaction", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 5
+#line 9
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -90,8 +99,8 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 6
- testRunner.Given("I\'m logged in the backend rest api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                             "field",
@@ -104,15 +113,15 @@ this.ScenarioInitialize(scenarioInfo);
                             "tasty cupcake"});
                 table1.AddRow(new string[] {
                             "cost",
-                            "$2.5"});
-#line 7
+                            "2.5"});
+                table1.AddRow(new string[] {
+                            "userId",
+                            "630bca76f43104d1a1143efb"});
+#line 10
  testRunner.When("I create a positive transaction with the following values", ((string)(null)), table1, "When ");
 #line hidden
-#line 12
+#line 16
  testRunner.Then("I should get a 200 response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 13
- testRunner.And("the data should be available in the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -125,7 +134,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The one where I succesfully update a transaction", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 15
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -135,8 +144,8 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 16
- testRunner.Given("I\'m logged in the backend rest api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 5
+this.FeatureBackground();
 #line hidden
                 TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                             "field",
@@ -149,18 +158,18 @@ this.ScenarioInitialize(scenarioInfo);
                             "delicious burrito"});
                 table2.AddRow(new string[] {
                             "cost",
-                            "$5"});
-#line 17
- testRunner.And("I\'ve created a transaction with the following values", ((string)(null)), table2, "And ");
+                            "5"});
+                table2.AddRow(new string[] {
+                            "userId",
+                            "630bca76f43104d1a1143efb"});
+#line 20
+ testRunner.Given("I\'ve created a transaction with the following values", ((string)(null)), table2, "Given ");
 #line hidden
-#line 22
+#line 26
  testRunner.When("I change the description to tasty burrito", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 23
- testRunner.Then("I should get a 200 reponse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 24
- testRunner.And("the changes should be visible in the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 27
+ testRunner.Then("I should get a 200 response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -173,7 +182,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("The one where I succesfully delete a transaction", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 26
+#line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -183,7 +192,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 27
+#line 5
+this.FeatureBackground();
+#line hidden
+#line 31
  testRunner.Given("I\'m logged in the backend rest api", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
                 TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -191,24 +203,24 @@ this.ScenarioInitialize(scenarioInfo);
                             "value"});
                 table3.AddRow(new string[] {
                             "title",
-                            "car"});
+                            "Big Car"});
                 table3.AddRow(new string[] {
                             "description",
                             "really expensive car"});
                 table3.AddRow(new string[] {
                             "cost",
-                            "$50000"});
-#line 28
+                            "50000"});
+                table3.AddRow(new string[] {
+                            "userId",
+                            "630bca76f43104d1a1143efb"});
+#line 32
  testRunner.And("I\'ve created a transaction with the following values", ((string)(null)), table3, "And ");
 #line hidden
-#line 33
+#line 38
  testRunner.When("I delete that transaction", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 34
- testRunner.Then("I should get a 200 reponse", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 35
- testRunner.And("the transaction shouldn\'t be available in the database", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 39
+ testRunner.Then("I should get a 200 response", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
